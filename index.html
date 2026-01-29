@@ -3,164 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Entertainment | Tickets</title>
+    <title>Virtual Entertainment | Tickets & Show</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
-        body { background-color: #050505; color: white; font-family: 'Segoe UI', sans-serif; }
-        /* Transparency van frozenlogo moet altijd op 1 staan */
-        #frozenlogo { opacity: 1 !important; font-weight: 900; letter-spacing: 2px; color: #3b82f6; }
+        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; }
         
+        /* Persoonlijke instelling: Transparency altijd op 1 */
+        #frozenlogo { opacity: 1 !important; font-weight: 900; color: #3b82f6; }
+
+        /* Verbeterde Zaalindeling */
         .seat {
-            width: 30px; height: 30px; background: #2a0505; border: 1px solid #4a0a0a;
-            border-radius: 6px; cursor: pointer; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center; font-size: 10px;
+            width: 24px; height: 24px; background: #3a0000; border-radius: 4px;
+            cursor: pointer; transition: all 0.2s; font-size: 9px;
+            display: flex; align-items: center; justify-content: center;
         }
-        .seat.selected { background: #eab308 !important; border-color: #fff; box-shadow: 0 0 10px #eab308; }
-        .seat.occupied { background: #111; cursor: not-allowed; opacity: 0.5; }
-        .seat.unavailable { cursor: not-allowed; background: #1a1a1a; }
+        .seat:hover { background: #5a0000; transform: scale(1.1); }
+        .seat.selected { background: #fbbf24 !important; color: black; box-shadow: 0 0 12px #fbbf24; }
         
-        .screen { background: linear-gradient(to bottom, #3b82f6, transparent); height: 50px; border-radius: 50% / 100% 100% 0 0; }
+        .aisle { width: 30px; } /* De zijbeuken uit de screenshots */
+        .screen-glow { 
+            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.4), transparent);
+            height: 40px; border-radius: 50% / 100% 100% 0 0;
+        }
     </style>
 </head>
 <body>
 
-<nav class="p-6 border-b border-white/10 flex justify-between items-center bg-black/50 sticky top-0 z-50">
-    <div id="frozenlogo">VIRTUAL ENTERTAINMENT</div>
-    <div class="text-sm border border-blue-500/30 px-4 py-1 rounded-full">
-        Beschikbaar: <span id="total-available" class="text-blue-400">180</span> stoelen
-    </div>
+<nav class="p-6 border-b border-white/10 flex justify-between items-center bg-black/80 sticky top-0 z-50">
+    <div id="frozenlogo" class="text-xl">VIRTUAL ENTERTAINMENT</div>
 </nav>
 
-<div class="max-w-6xl mx-auto p-10 grid md:grid-cols-2 gap-10">
-    <div class="bg-zinc-900/50 p-6 rounded-2xl border border-white/5">
-        <img src="https://github.com/jouwgebruikersnaam/jouwrepo/blob/main/image_c7b91e.jpg?raw=true" class="w-full h-48 object-cover rounded-xl mb-4" alt="Frozen">
-        <h2 class="text-2xl font-bold mb-2">Disney FROZEN</h2>
-        <p class="text-gray-400 text-sm mb-4">Beleef de magie in het AFAS Circustheater.</p>
-        <button onclick="openSeating('Frozen')" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold transition">Claim Tickets</button>
-    </div>
-
-    <div class="bg-zinc-900/50 p-6 rounded-2xl border border-white/5">
-        <img src="https://github.com/jouwgebruikersnaam/jouwrepo/blob/main/image_c7b612.png?raw=true" class="w-full h-48 object-cover rounded-xl mb-4" alt="Wicked">
-        <h2 class="text-2xl font-bold mb-2">Wicked</h2>
-        <p class="text-gray-400 text-sm mb-4">Het onvertelde verhaal van de heksen van Oz.</p>
-        <button onclick="openSeating('Wicked')" class="w-full bg-green-600 hover:bg-green-700 py-3 rounded-xl font-bold transition">Claim Tickets</button>
+<div class="max-w-5xl mx-auto mt-10 p-4">
+    <h2 class="text-center text-xl font-bold mb-4 text-blue-400">BEKIJK DE TRAILER</h2>
+    <div class="aspect-video w-full bg-zinc-900 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+        <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
     </div>
 </div>
 
-<div id="seating-modal" class="fixed inset-0 bg-black/95 z-50 hidden flex flex-col items-center justify-center p-4">
-    <h2 id="modal-title" class="text-3xl font-black mb-8">KIES JE STOELEN</h2>
-    
-    <div class="screen w-full max-w-md mb-12 flex items-center justify-center text-xs tracking-widest text-blue-200">PODIUM</div>
+<div class="max-w-6xl mx-auto p-10 grid md:grid-cols-2 gap-10">
+    <div class="group bg-zinc-900/50 p-6 rounded-2xl border border-white/5 hover:border-blue-500/50 transition">
+        <img src="https://github.com/jouwgebruikersnaam/jouwrepo/blob/main/image_c7b91e.jpg?raw=true" class="w-full h-48 object-cover rounded-xl mb-4 grayscale group-hover:grayscale-0 transition duration-500" alt="Frozen">
+        <h2 class="text-2xl font-bold mb-2">Disney FROZEN</h2>
+        <button onclick="openSeating('Frozen')" class="w-full bg-blue-600 py-3 rounded-xl font-bold mt-4">Kies Stoelen</button>
+    </div>
 
-    <div id="seating-grid" class="mb-10">
+    <div class="group bg-zinc-900/50 p-6 rounded-2xl border border-white/5 hover:border-green-500/50 transition">
+        <img src="https://github.com/jouwgebruikersnaam/jouwrepo/blob/main/image_c7b612.png?raw=true" class="w-full h-48 object-cover rounded-xl mb-4 grayscale group-hover:grayscale-0 transition duration-500" alt="Wicked">
+        <h2 class="text-2xl font-bold mb-2">Wicked</h2>
+        <button onclick="openSeating('Wicked')" class="w-full bg-green-600 py-3 rounded-xl font-bold mt-4">Kies Stoelen</button>
+    </div>
+</div>
+
+<div id="seating-modal" class="fixed inset-0 bg-black/98 z-50 hidden overflow-y-auto">
+    <div class="min-h-screen flex flex-col items-center justify-center p-8">
+        <h2 id="modal-title" class="text-3xl font-black mb-12 tracking-tighter"></h2>
+        
+        <div class="w-full max-w-2xl">
+            <div class="screen-glow mb-16 flex items-center justify-center text-[10px] tracking-[0.5em] text-blue-300">PODIUM</div>
+            
+            <div id="seating-grid" class="flex flex-col items-center">
+                </div>
         </div>
 
-    <div class="flex gap-4 w-full max-w-md">
-        <input type="email" id="user-email" placeholder="Je e-mail voor de tickets" class="flex-1 bg-zinc-800 border border-white/10 p-3 rounded-lg outline-none focus:border-blue-500">
-        <button onclick="submitBooking()" class="bg-yellow-500 text-black font-bold px-8 py-3 rounded-lg hover:bg-yellow-400 transition">BESTELLEN</button>
-        <button onclick="closeSeating()" class="bg-zinc-700 px-4 py-3 rounded-lg">ANNULEER</button>
+        <div class="mt-12 w-full max-w-md bg-zinc-900 p-6 rounded-2xl border border-white/10">
+            <input type="email" id="user-email" placeholder="jouw@email.com" class="w-full bg-black border border-white/20 p-4 rounded-xl mb-4 outline-none focus:border-yellow-500">
+            <div class="flex gap-2">
+                <button onclick="submitBooking()" class="flex-1 bg-yellow-500 text-black font-black py-4 rounded-xl hover:bg-yellow-400 transition">RESERVEREN</button>
+                <button onclick="closeSeating()" class="px-6 bg-zinc-800 rounded-xl">Sluit</button>
+            </div>
+            <p id="status-msg" class="mt-4 text-center text-sm font-medium"></p>
+        </div>
     </div>
-    <p id="error-msg" class="text-red-500 mt-4 text-sm"></p>
 </div>
 
 <script>
+    emailjs.init("YOUR_PUBLIC_KEY"); // VUL HIER JE KEY IN
+
     let selectedSeats = [];
     let currentShow = "";
-    const maxSeats = 3;
-
-    // EmailJS Initialisatie (Vervang 'YOUR_PUBLIC_KEY' met jouw eigen sleutel)
-    emailjs.init("YOUR_PUBLIC_KEY");
 
     function openSeating(show) {
         currentShow = show;
-        document.getElementById('modal-title').innerText = `${show.toUpperCase()} - KIES JE STOELEN`;
+        document.getElementById('modal-title').innerText = show.toUpperCase();
         document.getElementById('seating-modal').classList.remove('hidden');
-        generateSeats();
+        generateComplexGrid();
     }
 
-    function generateSeats() {
+    function generateComplexGrid() {
         const grid = document.getElementById('seating-grid');
         grid.innerHTML = "";
         
-        // 10 rijen, 12 stoelen per rij
         for (let r = 1; r <= 10; r++) {
             const rowDiv = document.createElement('div');
-            rowDiv.className = "flex gap-2 mb-2 justify-center items-center";
+            rowDiv.className = "flex mb-2 items-center";
             
-            // Rang nummer toevoegen aan het begin van de rij
-            const label = document.createElement('span');
-            label.innerText = `R${r}`;
-            label.className = "text-[10px] text-gray-500 w-4";
-            rowDiv.appendChild(label);
+            // Linker blok (3 stoelen)
+            rowDiv.appendChild(createBlock(r, 1, 3));
+            // Zijbeuk links
+            const aisleL = document.createElement('div'); aisleL.className = "aisle"; rowDiv.appendChild(aisleL);
+            // Midden blok (6 stoelen)
+            rowDiv.appendChild(createBlock(r, 4, 9));
+            // Zijbeuk rechts
+            const aisleR = document.createElement('div'); aisleR.className = "aisle"; rowDiv.appendChild(aisleR);
+            // Rechter blok (3 stoelen)
+            rowDiv.appendChild(createBlock(r, 10, 12));
 
-            for (let s = 1; s <= 12; s++) {
-                const seat = document.createElement('div');
-                seat.className = "seat";
-                seat.innerText = s;
-                seat.onclick = () => toggleSeat(seat, r, s);
-                rowDiv.appendChild(seat);
-            }
             grid.appendChild(rowDiv);
         }
     }
 
-    function toggleSeat(el, row, num) {
-        const seatId = `${row}-${num}`;
-        const errorMsg = document.getElementById('error-msg');
-        errorMsg.innerText = "";
-
-        if (el.classList.contains('selected')) {
-            el.classList.remove('selected');
-            selectedSeats = selectedSeats.filter(s => s.id !== seatId);
-        } else {
-            // Check max 3 stoelen
-            if (selectedSeats.length >= maxSeats) {
-                errorMsg.innerText = "Je mag maximaal 3 stoelen kiezen.";
-                return;
-            }
-
-            // Check voor "gaten" (moet naast een andere geselecteerde stoel zijn als je er al een hebt)
-            if (selectedSeats.length > 0) {
-                const isAdjacent = selectedSeats.some(s => s.row === row && Math.abs(s.num - num) === 1);
-                if (!isAdjacent) {
-                    errorMsg.innerText = "Je moet stoelen direct naast elkaar kiezen (geen gaten).";
-                    return;
+    function createBlock(row, start, end) {
+        const block = document.createElement('div');
+        block.className = "flex gap-1.5";
+        for (let s = start; s <= end; s++) {
+            const seat = document.createElement('div');
+            seat.className = "seat";
+            seat.innerText = s;
+            seat.onclick = () => {
+                const id = `${row}-${s}`;
+                if (seat.classList.contains('selected')) {
+                    seat.classList.remove('selected');
+                    selectedSeats = selectedSeats.filter(i => i !== id);
+                } else if (selectedSeats.length < 3) {
+                    seat.classList.add('selected');
+                    selectedSeats.push(id);
                 }
-            }
-
-            el.classList.add('selected');
-            selectedSeats.push({ id: seatId, row, num });
+            };
+            block.appendChild(seat);
         }
+        return block;
     }
 
     function submitBooking() {
         const email = document.getElementById('user-email').value;
+        const msg = document.getElementById('status-msg');
+        
         if (!email || selectedSeats.length === 0) {
-            alert("Vul je mail in en kies minimaal één stoel.");
+            msg.innerText = "Selecteer stoelen en vul je mail in!";
+            msg.style.color = "#ef4444";
             return;
         }
 
-        const seatDetails = selectedSeats.map(s => `Rij ${s.row} Stoel ${s.num}`).join(", ");
+        msg.innerText = "Verzenden...";
+        msg.style.color = "#3b82f6";
 
-        // Email versturen via EmailJS
         emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
             to_email: email,
             show_name: currentShow,
-            seats: seatDetails
+            seats: selectedSeats.join(", ")
         }).then(() => {
-            alert(`Succes! Je tickets voor ${currentShow} (${seatDetails}) zijn verstuurd naar ${email}`);
-            closeSeating();
-        }, (err) => {
-            alert("Er ging iets mis met de e-mail: " + JSON.stringify(err));
+            msg.innerText = "Tickets verstuurd! Check je inbox.";
+            msg.style.color = "#10b981";
+            setTimeout(closeSeating, 2000);
+        }).catch((err) => {
+            msg.innerText = "Fout bij verzenden. Gebruik je de juiste Keys?";
+            console.error(err);
         });
     }
 
     function closeSeating() {
         document.getElementById('seating-modal').classList.add('hidden');
         selectedSeats = [];
+        document.getElementById('status-msg').innerText = "";
     }
 </script>
-
 </body>
 </html>
