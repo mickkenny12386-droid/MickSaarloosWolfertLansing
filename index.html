@@ -6,7 +6,7 @@
     <title>Virtual Entertainment | Official Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@400;900&display=swap');
 
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         
@@ -14,82 +14,60 @@
         #frozenlogo { 
             opacity: 1 !important; 
             font-family: 'Syncopate', sans-serif; 
-            font-weight: 700; 
             color: #3b82f6; 
             letter-spacing: 4px; 
         }
 
         .page { display: none; min-height: 100vh; width: 100%; }
-        .page.active { display: block; animation: fadeIn 0.6s ease-out; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .page.active { display: block; }
 
         /* Realistische Seating Chart */
         .seat {
-            width: 28px; height: 32px; background: #3b0707; border-radius: 6px 6px 2px 2px;
+            width: 30px; height: 34px; background: #3b0707; border-radius: 6px 6px 2px 2px;
             cursor: pointer; transition: 0.3s; border-bottom: 4px solid #1a0202;
         }
-        .seat:hover { background: #7f1d1d; transform: scale(1.1); }
         .seat.selected { background: #fbbf24 !important; border-color: #b45309; box-shadow: 0 0 20px #fbbf24; }
-        
-        /* De Witte Zuilen uit jouw zaalontwerp */
-        .pillar { width: 15px; background: linear-gradient(180deg, #fff, #94a3b8); height: 220px; border-radius: 10px; box-shadow: 0 0 25px rgba(255,255,255,0.1); }
+        .pillar { width: 15px; background: linear-gradient(180deg, #fff, #94a3b8); height: 220px; border-radius: 10px; }
 
-        .hero-video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; z-index: -1;
+        .video-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6; z-index: -1;
         }
     </style>
 </head>
 <body>
 
-<nav class="fixed top-0 w-full z-[100] p-8 flex justify-between items-center bg-gradient-to-b from-black to-transparent">
+<nav class="fixed top-0 w-full z-[100] p-8 flex justify-between items-center bg-black/50 backdrop-blur-md">
     <div id="frozenlogo" class="text-xl cursor-pointer" onclick="showPage('home')">VIRTUAL ENTERTAINMENT</div>
-    <div class="flex gap-8 items-center font-bold text-xs tracking-widest">
-        <button onclick="showPage('home')" class="hover:text-blue-500 transition">HOME</button>
-        <button onclick="toggleLogin()" id="auth-btn" class="border border-white/20 px-6 py-2 rounded-full hover:bg-white hover:text-black transition">LOGIN</button>
-    </div>
+    <button onclick="toggleLogin()" id="auth-btn" class="border border-white/20 px-6 py-2 rounded-full font-bold hover:bg-white hover:text-black transition">LOGIN</button>
 </nav>
 
 <section id="home" class="page active">
     <div class="relative h-screen flex items-center justify-center">
-        <video autoplay muted loop playsinline class="hero-video">
+        <video autoplay muted loop playsinline class="video-bg" id="heroVideo">
             <source src="FRO_NL_Trailer_60_16x9_ONLINE_L15647_A_02_no_end_card.mp4" type="video/mp4">
         </video>
-        <div class="text-center z-10 px-4">
-            <h1 class="text-7xl md:text-9xl font-black italic tracking-tighter mb-4 uppercase">Experience</h1>
-            <p class="text-blue-400 tracking-[0.6em] font-light">BEYOND REALITY</p>
+        <div class="text-center z-10">
+            <h1 class="text-6xl md:text-8xl font-black italic tracking-tighter uppercase mb-4">Virtual Theater</h1>
+            <p class="text-blue-400 tracking-[0.5em] font-light">MAGIE WORDT WERKELIJKHEID</p>
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto py-32 px-10">
-        <div class="grid md:grid-cols-2 gap-20">
-            <div class="group cursor-pointer" onclick="openShow('Frozen de Musical')">
-                <div class="relative overflow-hidden rounded-[2rem] mb-8 shadow-2xl">
-                    <img src="https://raw.githubusercontent.com/mickkenny12386-droid/virtual-entertainment/main/image_c7b91e.jpg" class="w-full h-[500px] object-cover group-hover:scale-110 transition duration-700">
-                    <div class="absolute inset-0 bg-blue-900/20 group-hover:bg-transparent transition"></div>
-                </div>
-                <h3 class="text-4xl font-black italic">FROZEN</h3>
-                <p class="text-gray-500 mt-2 font-bold tracking-widest uppercase text-sm">Nu in Virtual Theater</p>
-            </div>
-
-            <div class="group cursor-pointer" onclick="openShow('Wicked de Musical')">
-                <div class="relative overflow-hidden rounded-[2rem] mb-8 shadow-2xl">
-                    <img src="https://raw.githubusercontent.com/mickkenny12386-droid/virtual-entertainment/main/image_c7b612.png" class="w-full h-[500px] object-cover group-hover:scale-110 transition duration-700">
-                    <div class="absolute inset-0 bg-green-900/20 group-hover:bg-transparent transition"></div>
-                </div>
-                <h3 class="text-4xl font-black italic text-green-500">WICKED</h3>
-                <p class="text-gray-500 mt-2 font-bold tracking-widest uppercase text-sm">Binnenkort beschikbaar</p>
-            </div>
+    <div class="max-w-7xl mx-auto py-32 px-10 grid md:grid-cols-2 gap-20">
+        <div class="group cursor-pointer" onclick="openShow('Frozen')">
+            <img src="https://raw.githubusercontent.com/mickkenny12386-droid/virtual-entertainment/main/image_c7b91e.jpg" class="rounded-[2rem] w-full h-[500px] object-cover mb-6">
+            <h3 class="text-4xl font-black italic">FROZEN</h3>
+        </div>
+        <div class="group cursor-pointer" onclick="openShow('Wicked')">
+            <img src="https://raw.githubusercontent.com/mickkenny12386-droid/virtual-entertainment/main/image_c7b612.png" class="rounded-[2rem] w-full h-[500px] object-cover mb-6 border-green-500/30 border">
+            <h3 class="text-4xl font-black italic text-green-500">WICKED</h3>
         </div>
     </div>
 </section>
 
 <section id="seating-page" class="page bg-[#050505]">
     <div class="flex flex-col items-center justify-center min-h-screen p-10">
-        <h2 id="show-title" class="text-4xl font-black mb-20 italic text-blue-500 tracking-widest"></h2>
+        <h2 id="show-title" class="text-4xl font-black mb-20 italic text-blue-500"></h2>
         
-        <div class="w-2/3 h-1 bg-blue-500 shadow-[0_0_30px_#3b82f6] mb-24 rounded-full"></div>
-
         <div class="flex justify-center items-center gap-12 mb-20">
             <div id="grid-left" class="grid grid-cols-3 gap-4"></div>
             <div class="pillar"></div>
@@ -99,31 +77,26 @@
         </div>
 
         <div class="max-w-md w-full text-center">
-            <p id="user-display" class="mb-6 text-gray-400 font-bold uppercase tracking-widest text-xs"></p>
-            <button onclick="processBooking()" class="w-full bg-blue-600 py-6 rounded-2xl font-black hover:bg-blue-500 transition shadow-2xl uppercase tracking-widest">Reserveer & Ontvang Mail</button>
-            <button onclick="showPage('home')" class="mt-8 text-gray-600 hover:text-white transition block w-full">Annuleren</button>
+            <button onclick="processBooking()" class="w-full bg-blue-600 py-6 rounded-2xl font-black hover:bg-blue-500 transition shadow-2xl">BEVESTIG & STUUR TICKETS</button>
+            <button onclick="showPage('home')" class="mt-8 text-gray-500 block w-full">Terug</button>
         </div>
     </div>
 </section>
 
-<div id="login-modal" class="fixed inset-0 bg-black/95 z-[200] hidden flex items-center justify-center p-6 backdrop-blur-md">
-    <div class="bg-zinc-900 p-12 rounded-[3rem] w-full max-w-md border border-white/10 shadow-2xl">
-        <h2 class="text-3xl font-black mb-2 text-center">ACCOUNT</h2>
-        <p class="text-gray-500 text-center mb-10 text-sm">Log in voor Virtual Entertainment</p>
-        <input type="email" id="email" placeholder="E-mail" class="w-full bg-black border border-white/10 p-5 rounded-2xl mb-4 outline-none focus:border-blue-500 transition">
-        <input type="password" id="pass" placeholder="Wachtwoord" class="w-full bg-black border border-white/10 p-5 rounded-2xl mb-8 outline-none focus:border-blue-500 transition">
-        <button onclick="login()" class="w-full bg-white text-black font-black py-5 rounded-2xl hover:bg-blue-500 hover:text-white transition mb-4">INLOGGEN</button>
-        <button onclick="toggleLogin()" class="w-full text-gray-600 text-xs">Sluiten</button>
+<div id="login-modal" class="fixed inset-0 bg-black/95 z-[200] hidden flex items-center justify-center p-6">
+    <div class="bg-zinc-900 p-12 rounded-[3rem] w-full max-w-md border border-white/10">
+        <h2 class="text-3xl font-black mb-8 text-center">INLOGGEN</h2>
+        <input type="email" id="email" placeholder="E-mail" class="w-full bg-black border border-white/10 p-5 rounded-2xl mb-4 outline-none focus:border-blue-500">
+        <input type="password" id="pass" placeholder="Wachtwoord" class="w-full bg-black border border-white/10 p-5 rounded-2xl mb-8 outline-none focus:border-blue-500">
+        <button onclick="login()" class="w-full bg-white text-black font-black py-5 rounded-2xl mb-4">START</button>
+        <button onclick="toggleLogin()" class="w-full text-gray-600">Sluiten</button>
     </div>
 </div>
 
 <div id="confirm-overlay" class="fixed inset-0 bg-blue-600 z-[300] hidden flex flex-col items-center justify-center text-center p-10">
-    <div class="animate-bounce mb-8">
-        <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-    </div>
-    <h2 class="text-5xl font-black mb-4">RESERVERING VERSTUURD!</h2>
-    <p class="text-xl mb-10 opacity-80">Check nu je Gmail voor de tickets van Virtual Entertainment.</p>
-    <button onclick="goToGmail()" class="bg-white text-blue-600 px-12 py-5 rounded-full font-black hover:scale-105 transition">OPEN GMAIL</button>
+    <h2 class="text-6xl font-black mb-6">BEKIJK UW MAIL!</h2>
+    <p class="text-2xl mb-10">De tickets van Virtual Entertainment zijn naar u verzonden.</p>
+    <button onclick="location.reload()" class="bg-white text-blue-600 px-12 py-5 rounded-full font-black">OK</button>
 </div>
 
 <script>
@@ -134,24 +107,19 @@
     function showPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
-        window.scrollTo(0,0);
     }
 
-    function toggleLogin() {
-        document.getElementById('login-modal').classList.toggle('hidden');
-    }
+    function toggleLogin() { document.getElementById('login-modal').classList.toggle('hidden'); }
 
     function login() {
         const email = document.getElementById('email').value;
         const pass = document.getElementById('pass').value;
         if (email === "mick.saarloos12@gmail.com" && pass === "VirtualEntertainmentAdmin") {
             user = { email, role: 'admin' };
-            alert("Welkom Mick.");
         } else if(email && pass) {
             user = { email, role: 'user' };
-        } else {
-            return alert("Vul alles in.");
-        }
+        } else return alert("Vul alles in.");
+        
         document.getElementById('auth-btn').innerText = user.email.split('@')[0].toUpperCase();
         toggleLogin();
     }
@@ -159,9 +127,7 @@
     function openShow(show) {
         if (!user) return toggleLogin();
         selectedShow = show;
-        selectedSeats = [];
         document.getElementById('show-title').innerText = show.toUpperCase();
-        document.getElementById('user-display').innerText = "Ingelogd: " + user.email;
         showPage('seating-page');
         renderSeats();
     }
@@ -181,31 +147,26 @@
                 el.appendChild(s);
             }
         };
-        build('grid-left', 3, 5, 'L');
-        build('grid-center', 6, 5, 'M');
-        build('grid-right', 3, 5, 'R');
+        build('grid-left', 3, 5, 'L'); build('grid-center', 6, 5, 'M'); build('grid-right', 3, 5, 'R');
     }
 
     function processBooking() {
         if (selectedSeats.length === 0) return alert("Kies stoelen.");
         
-        // Simuleer versturen en toon de blauwe melding
+        // ECHTE MAIL VERZENDEN:
+        // Maak een gratis account op Formspree.io en vervang 'JOUW_ID' hieronder:
+        fetch("https://formspree.io/f/JOUW_ID", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: user.email,
+                bericht: `Virtual Entertainment Tickets voor ${selectedShow}. Stoelen: ${selectedSeats.join(", ")}`
+            })
+        });
+
         document.getElementById('confirm-overlay').classList.remove('hidden');
-
-        // Maak de Gmail link klaar
-        const subject = encodeURIComponent("Jouw Tickets: " + selectedShow + " - Virtual Entertainment");
-        const body = encodeURIComponent("Bedankt voor je reservering bij Virtual Entertainment!\n\nShow: " + selectedShow + "\nStoelen: " + selectedSeats.join(", ") + "\n\nVeel plezier!");
-        
-        // Deze link wordt gebruikt in de knop op de blauwe pagina
-        window.pendingMail = `https://mail.google.com/mail/?view=cm&fs=1&to=${user.email}&su=${subject}&body=${body}`;
-    }
-
-    function goToGmail() {
-        window.open(window.pendingMail, '_blank');
-        location.reload(); // Reset de site
     }
 </script>
 
 </body>
 </html>
-
