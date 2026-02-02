@@ -3,171 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Entertainment | Official Portal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Mijn Persoonlijke Website</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@400;900&display=swap');
-
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        
-        /* PERSOONLIJKE EIS: Transparency altijd op 1 */
-        #frozenlogo { 
-            opacity: 1 !important; 
-            font-family: 'Syncopate', sans-serif; 
-            color: #3b82f6; 
-            letter-spacing: 4px; 
+        /* CSS STYLING - Geïnspireerd door Wolfert Lansing */
+        :root {
+            --wolfert-purple: #6a1b9a;
+            --wolfert-red: #b71c1c;
+            --bg-light: #f9f9f9;
         }
 
-        .page { display: none; min-height: 100vh; width: 100%; }
-        .page.active { display: block; }
-
-        /* Realistische Seating Chart */
-        .seat {
-            width: 30px; height: 34px; background: #3b0707; border-radius: 6px 6px 2px 2px;
-            cursor: pointer; transition: 0.3s; border-bottom: 4px solid #1a0202;
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background-color: var(--bg-light);
+            color: #333;
         }
-        .seat.selected { background: #fbbf24 !important; border-color: #b45309; box-shadow: 0 0 20px #fbbf24; }
-        .pillar { width: 15px; background: linear-gradient(180deg, #fff, #94a3b8); height: 220px; border-radius: 10px; }
 
-        .video-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6; z-index: -1;
+        header {
+            background: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--wolfert-purple);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--wolfert-red);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+        }
+
+        /* Grid voor de 3 keuze delen */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 40px 5%;
+        }
+
+        .card {
+            background: white;
+            border: 2px solid var(--wolfert-purple);
+            border-radius: 0 0 40px 0; /* Stijl van de foto */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h2 {
+            color: var(--wolfert-red);
+            margin-top: 0;
+        }
+
+        .card.purple {
+            background-color: var(--wolfert-purple);
+            color: white;
+        }
+
+        .card.purple h2 {
+            color: white;
+        }
+
+        /* Lijst styling */
+        .item-list {
+            margin: 20px 0;
+            flex-grow: 1;
+        }
+
+        .item {
+            background: rgba(0,0,0,0.05);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .purple .item {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .add-btn {
+            background: var(--wolfert-purple);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .purple .add-btn {
+            background: white;
+            color: var(--wolfert-purple);
+        }
+
+        /* Formulier Popup */
+        #form-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input, textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
 
-<nav class="fixed top-0 w-full z-[100] p-8 flex justify-between items-center bg-black/50 backdrop-blur-md">
-    <div id="frozenlogo" class="text-xl cursor-pointer" onclick="showPage('home')">VIRTUAL ENTERTAINMENT</div>
-    <button onclick="toggleLogin()" id="auth-btn" class="border border-white/20 px-6 py-2 rounded-full font-bold hover:bg-white hover:text-black transition">LOGIN</button>
-</nav>
+    <header>
+        <div class="logo">Mijn Website</div>
+        <nav>HOME | PROJECTEN | CONTACT</nav>
+    </header>
 
-<section id="home" class="page active">
-    <div class="relative h-screen flex items-center justify-center">
-        <video autoplay muted loop playsinline class="video-bg" id="heroVideo">
-            <source src="FRO_NL_Trailer_60_16x9_ONLINE_L15647_A_02_no_end_card.mp4" type="video/mp4">
-        </video>
-        <div class="text-center z-10">
-            <h1 class="text-6xl md:text-8xl font-black italic tracking-tighter uppercase mb-4">Virtual Theater</h1>
-            <p class="text-blue-400 tracking-[0.5em] font-light">MAGIE WORDT WERKELIJKHEID</p>
+    <section class="hero">
+        <h1>Welkom op mijn dashboard</h1>
+        <p>Beheer hier je schoolwerk en activiteiten.</p>
+    </section>
+
+    <div class="container">
+        <div class="card">
+            <h2>Medezeggenschapsraad</h2>
+            <div id="list-mr" class="item-list"></div>
+            <button class="add-btn" onclick="openForm('list-mr', 'Vergadering')">Voeg Vergadering toe</button>
+        </div>
+
+        <div class="card purple">
+            <h2>School Projecten</h2>
+            <div id="list-projecten" class="item-list"></div>
+            <button class="add-btn" onclick="openForm('list-projecten', 'Project')">Voeg Project toe</button>
+        </div>
+
+        <div class="card">
+            <h2>Huiswerk</h2>
+            <div id="list-huiswerk" class="item-list"></div>
+            <button class="add-btn" onclick="openForm('list-huiswerk', 'Huiswerk')">Voeg Huiswerk toe</button>
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto py-32 px-10 grid md:grid-cols-2 gap-20">
-        <div class="group cursor-pointer" onclick="openShow('Frozen')">
-            <img src="https://raw.githubusercontent.com/mickkenny12386-droid/virtual-entertainment/main/image_c7b91e.jpg" class="rounded-[2rem] w-full h-[500px] object-cover mb-6">
-            <h3 class="text-4xl font-black italic">FROZEN</h3>
-        </div>
-        <div class="group cursor-pointer" onclick="openShow('Wicked')">
-            <img src="https://raw.githubusercontent.com/mickkenny12386-droid/virtual-entertainment/main/image_c7b612.png" class="rounded-[2rem] w-full h-[500px] object-cover mb-6 border-green-500/30 border">
-            <h3 class="text-4xl font-black italic text-green-500">WICKED</h3>
-        </div>
-    </div>
-</section>
-
-<section id="seating-page" class="page bg-[#050505]">
-    <div class="flex flex-col items-center justify-center min-h-screen p-10">
-        <h2 id="show-title" class="text-4xl font-black mb-20 italic text-blue-500"></h2>
-        
-        <div class="flex justify-center items-center gap-12 mb-20">
-            <div id="grid-left" class="grid grid-cols-3 gap-4"></div>
-            <div class="pillar"></div>
-            <div id="grid-center" class="grid grid-cols-6 gap-4"></div>
-            <div class="pillar"></div>
-            <div id="grid-right" class="grid grid-cols-3 gap-4"></div>
-        </div>
-
-        <div class="max-w-md w-full text-center">
-            <button onclick="processBooking()" class="w-full bg-blue-600 py-6 rounded-2xl font-black hover:bg-blue-500 transition shadow-2xl">BEVESTIG & STUUR TICKETS</button>
-            <button onclick="showPage('home')" class="mt-8 text-gray-500 block w-full">Terug</button>
+    <div id="form-overlay">
+        <div class="form-box">
+            <h3 id="form-title">Toevoegen</h3>
+            <input type="text" id="input-naam" placeholder="Naam/Titel">
+            <textarea id="input-desc" placeholder="Beschrijving/Betekenis"></textarea>
+            <input type="url" id="input-link" placeholder="Link (bijv. https://google.nl)">
+            <button class="add-btn" onclick="saveItem()">Opslaan</button>
+            <button onclick="closeForm()" style="background:none; border:none; cursor:pointer; color:grey;">Annuleren</button>
         </div>
     </div>
-</section>
 
-<div id="login-modal" class="fixed inset-0 bg-black/95 z-[200] hidden flex items-center justify-center p-6">
-    <div class="bg-zinc-900 p-12 rounded-[3rem] w-full max-w-md border border-white/10">
-        <h2 class="text-3xl font-black mb-8 text-center">INLOGGEN</h2>
-        <input type="email" id="email" placeholder="E-mail" class="w-full bg-black border border-white/10 p-5 rounded-2xl mb-4 outline-none focus:border-blue-500">
-        <input type="password" id="pass" placeholder="Wachtwoord" class="w-full bg-black border border-white/10 p-5 rounded-2xl mb-8 outline-none focus:border-blue-500">
-        <button onclick="login()" class="w-full bg-white text-black font-black py-5 rounded-2xl mb-4">START</button>
-        <button onclick="toggleLogin()" class="w-full text-gray-600">Sluiten</button>
-    </div>
-</div>
+    <script>
+        /* JAVASCRIPT - Werking van de knoppen */
+        let currentTarget = '';
 
-<div id="confirm-overlay" class="fixed inset-0 bg-blue-600 z-[300] hidden flex flex-col items-center justify-center text-center p-10">
-    <h2 class="text-6xl font-black mb-6">BEKIJK UW MAIL!</h2>
-    <p class="text-2xl mb-10">De tickets van Virtual Entertainment zijn naar u verzonden.</p>
-    <button onclick="location.reload()" class="bg-white text-blue-600 px-12 py-5 rounded-full font-black">OK</button>
-</div>
+        function openForm(targetId, type) {
+            currentTarget = targetId;
+            document.getElementById('form-title').innerText = type + " Toevoegen";
+            document.getElementById('form-overlay').style.display = 'flex';
+        }
 
-<script>
-    let user = null;
-    let selectedShow = "";
-    let selectedSeats = [];
+        function closeForm() {
+            document.getElementById('form-overlay').style.display = 'none';
+            document.getElementById('input-naam').value = '';
+            document.getElementById('input-desc').value = '';
+            document.getElementById('input-link').value = '';
+        }
 
-    function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-    }
+        function saveItem() {
+            const naam = document.getElementById('input-naam').value;
+            const desc = document.getElementById('input-desc').value;
+            const link = document.getElementById('input-link').value;
 
-    function toggleLogin() { document.getElementById('login-modal').classList.toggle('hidden'); }
-
-    function login() {
-        const email = document.getElementById('email').value;
-        const pass = document.getElementById('pass').value;
-        if (email === "mick.saarloos12@gmail.com" && pass === "VirtualEntertainmentAdmin") {
-            user = { email, role: 'admin' };
-        } else if(email && pass) {
-            user = { email, role: 'user' };
-        } else return alert("Vul alles in.");
-        
-        document.getElementById('auth-btn').innerText = user.email.split('@')[0].toUpperCase();
-        toggleLogin();
-    }
-
-    function openShow(show) {
-        if (!user) return toggleLogin();
-        selectedShow = show;
-        document.getElementById('show-title').innerText = show.toUpperCase();
-        showPage('seating-page');
-        renderSeats();
-    }
-
-    function renderSeats() {
-        const build = (id, c, r, p) => {
-            const el = document.getElementById(id); el.innerHTML = "";
-            for(let i=0; i<(c*r); i++) {
-                const s = document.createElement('div');
-                s.className = "seat";
-                s.onclick = () => {
-                    s.classList.toggle('selected');
-                    const sid = p + (i+1);
-                    if(s.classList.contains('selected')) selectedSeats.push(sid);
-                    else selectedSeats = selectedSeats.filter(x => x !== sid);
-                };
-                el.appendChild(s);
+            if (naam === "") {
+                alert("Vul a.u.b. een naam in.");
+                return;
             }
-        };
-        build('grid-left', 3, 5, 'L'); build('grid-center', 6, 5, 'M'); build('grid-right', 3, 5, 'R');
-    }
 
-    function processBooking() {
-        if (selectedSeats.length === 0) return alert("Kies stoelen.");
-        
-        // ECHTE MAIL VERZENDEN:
-        // Maak een gratis account op Formspree.io en vervang 'JOUW_ID' hieronder:
-        fetch("https://formspree.io/f/JOUW_ID", {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                email: user.email,
-                bericht: `Virtual Entertainment Tickets voor ${selectedShow}. Stoelen: ${selectedSeats.join(", ")}`
-            })
-        });
+            const container = document.getElementById(currentTarget);
+            
+            // Maak het nieuwe element aan
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.innerHTML = `
+                <strong>${naam}</strong><br>
+                <small>${desc}</small><br>
+                ${link ? `<a href="${link}" target="_blank" style="color:inherit; font-size:12px;">Bekijk link →</a>` : ''}
+            `;
 
-        document.getElementById('confirm-overlay').classList.remove('hidden');
-    }
-</script>
-
+            container.appendChild(div);
+            closeForm();
+        }
+    </script>
 </body>
 </html>
-
