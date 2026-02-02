@@ -3,219 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijn Persoonlijke Website</title>
+    <title>Mijn Dashboard</title>
     <style>
-        /* CSS STYLING - Geïnspireerd door Wolfert Lansing */
-        :root {
-            --wolfert-purple: #6a1b9a;
-            --wolfert-red: #b71c1c;
-            --bg-light: #f9f9f9;
-        }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            background-color: var(--bg-light);
-            color: #333;
-        }
-
-        header {
-            background: white;
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--wolfert-purple);
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--wolfert-red);
-        }
-
-        .hero {
-            text-align: center;
-            padding: 40px 20px;
-            background: white;
-        }
-
-        /* Grid voor de 3 keuze delen */
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 40px 5%;
-        }
-
-        .card {
-            background: white;
-            border: 2px solid var(--wolfert-purple);
-            border-radius: 0 0 40px 0; /* Stijl van de foto */
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card h2 {
-            color: var(--wolfert-red);
-            margin-top: 0;
-        }
-
-        .card.purple {
-            background-color: var(--wolfert-purple);
-            color: white;
-        }
-
-        .card.purple h2 {
-            color: white;
-        }
-
-        /* Lijst styling */
-        .item-list {
-            margin: 20px 0;
-            flex-grow: 1;
-        }
-
-        .item {
-            background: rgba(0,0,0,0.05);
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-        }
-
-        .purple .item {
-            background: rgba(255,255,255,0.1);
-        }
-
-        .add-btn {
-            background: var(--wolfert-purple);
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .purple .add-btn {
-            background: white;
-            color: var(--wolfert-purple);
-        }
-
-        /* Formulier Popup */
-        #form-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .form-box {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        input, textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+        :root { --purple: #6a1b9a; --red: #b71c1c; --bg: #f4f4f4; }
+        body { font-family: sans-serif; margin: 0; background: var(--bg); }
+        header { background: white; padding: 20px; border-bottom: 4px solid var(--purple); display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: var(--red); font-weight: bold; font-size: 24px; }
+        .hero { text-align: center; padding: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 20px; }
+        .card { background: white; border-radius: 0 0 40px 0; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-top: 5px solid var(--purple); }
+        .purple { background: var(--purple); color: white; border-top: none; }
+        .item { background: #eee; margin: 10px 0; padding: 10px; border-radius: 5px; color: #333; }
+        .purple .item { background: rgba(255,255,255,0.2); color: white; }
+        .btn { background: var(--purple); color: white; border: none; padding: 10px; cursor: pointer; border-radius: 5px; width: 100%; font-weight: bold; }
+        .purple .btn { background: white; color: var(--purple); }
+        #modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
+        .box { background: white; padding: 20px; border-radius: 10px; width: 300px; display: flex; flex-direction: column; gap: 10px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">Mijn Website</div>
-        <nav>HOME | PROJECTEN | CONTACT</nav>
-    </header>
+<header>
+    <div class="logo">Wolfert Dashboard</div>
+    <nav>HOME | INFO</nav>
+</header>
 
-    <section class="hero">
-        <h1>Welkom op mijn dashboard</h1>
-        <p>Beheer hier je schoolwerk en activiteiten.</p>
-    </section>
+<div class="hero">
+    <h1>Welkom bij mijn School Dashboard</h1>
+    <p>Beheer je schoolzaken op één plek.</p>
+</div>
 
-    <div class="container">
-        <div class="card">
-            <h2>Medezeggenschapsraad</h2>
-            <div id="list-mr" class="item-list"></div>
-            <button class="add-btn" onclick="openForm('list-mr', 'Vergadering')">Voeg Vergadering toe</button>
-        </div>
-
-        <div class="card purple">
-            <h2>School Projecten</h2>
-            <div id="list-projecten" class="item-list"></div>
-            <button class="add-btn" onclick="openForm('list-projecten', 'Project')">Voeg Project toe</button>
-        </div>
-
-        <div class="card">
-            <h2>Huiswerk</h2>
-            <div id="list-huiswerk" class="item-list"></div>
-            <button class="add-btn" onclick="openForm('list-huiswerk', 'Huiswerk')">Voeg Huiswerk toe</button>
-        </div>
+<div class="grid">
+    <div class="card">
+        <h2>Medezeggenschapsraad</h2>
+        <div id="list-mr"></div>
+        <button class="btn" onclick="openForm('list-mr', 'Vergadering')">Voeg Vergadering toe</button>
     </div>
-
-    <div id="form-overlay">
-        <div class="form-box">
-            <h3 id="form-title">Toevoegen</h3>
-            <input type="text" id="input-naam" placeholder="Naam/Titel">
-            <textarea id="input-desc" placeholder="Beschrijving/Betekenis"></textarea>
-            <input type="url" id="input-link" placeholder="Link (bijv. https://google.nl)">
-            <button class="add-btn" onclick="saveItem()">Opslaan</button>
-            <button onclick="closeForm()" style="background:none; border:none; cursor:pointer; color:grey;">Annuleren</button>
-        </div>
+    <div class="card purple">
+        <h2>School Projecten</h2>
+        <div id="list-projecten"></div>
+        <button class="btn" onclick="openForm('list-projecten', 'Project')">Voeg Project toe</button>
     </div>
+    <div class="card">
+        <h2>Huiswerk</h2>
+        <div id="list-huiswerk"></div>
+        <button class="btn" onclick="openForm('list-huiswerk', 'Huiswerk')">Voeg Huiswerk toe</button>
+    </div>
+</div>
 
-    <script>
-        /* JAVASCRIPT - Werking van de knoppen */
-        let currentTarget = '';
+<div id="modal">
+    <div class="box">
+        <h3>Toevoegen</h3>
+        <input type="text" id="in-naam" placeholder="Naam">
+        <input type="text" id="in-desc" placeholder="Beschrijving">
+        <input type="url" id="in-link" placeholder="Link (optioneel)">
+        <button class="btn" onclick="save()">Opslaan</button>
+        <button onclick="closeForm()" style="background:none; border:none; cursor:pointer;">Annuleren</button>
+    </div>
+</div>
 
-        function openForm(targetId, type) {
-            currentTarget = targetId;
-            document.getElementById('form-title').innerText = type + " Toevoegen";
-            document.getElementById('form-overlay').style.display = 'flex';
-        }
-
-        function closeForm() {
-            document.getElementById('form-overlay').style.display = 'none';
-            document.getElementById('input-naam').value = '';
-            document.getElementById('input-desc').value = '';
-            document.getElementById('input-link').value = '';
-        }
-
-        function saveItem() {
-            const naam = document.getElementById('input-naam').value;
-            const desc = document.getElementById('input-desc').value;
-            const link = document.getElementById('input-link').value;
-
-            if (naam === "") {
-                alert("Vul a.u.b. een naam in.");
-                return;
-            }
-
-            const container = document.getElementById(currentTarget);
-            
-            // Maak het nieuwe element aan
-            const div = document.createElement('div');
-            div.className = 'item';
-            div.innerHTML = `
-                <strong>${naam}</strong><br>
-                <small>${desc}</small><br>
-                ${link ? `<a href="${link}" target="_blank" style="color:inherit; font-size:12px;">Bekijk link →</a>` : ''}
-            `;
-
-            container.appendChild(div);
-            closeForm();
-        }
-    </script>
+<script>
+    let activeList = '';
+    function openForm(id, type) { activeList = id; document.getElementById('modal').style.display = 'flex'; }
+    function closeForm() { document.getElementById('modal').style.display = 'none'; }
+    function save() {
+        const n = document.getElementById('in-naam').value;
+        const d = document.getElementById('in-desc').value;
+        const l = document.getElementById('in-link').value;
+        if(!n) return alert('Naam invullen!');
+        const item = document.createElement('div');
+        item.className = 'item';
+        item.innerHTML = `<strong>${n}</strong><br>${d}${l ? `<br><a href="${l}" target="_blank" style="color:blue">Link</a>` : ''}`;
+        document.getElementById(activeList).appendChild(item);
+        closeForm();
+        document.getElementById('in-naam').value = '';
+        document.getElementById('in-desc').value = '';
+        document.getElementById('in-link').value = '';
+    }
+</script>
 </body>
 </html>
